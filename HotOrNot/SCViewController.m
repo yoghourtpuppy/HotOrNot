@@ -14,40 +14,23 @@
 FBFriendPickerDelegate,
 UINavigationControllerDelegate,
 FBPlacePickerDelegate,
-CLLocationManagerDelegate,
 UIActionSheetDelegate>
 
 @property (strong, nonatomic) FBUserSettingsViewController *settingsViewController;
-@property (strong, nonatomic) IBOutlet FBProfilePictureView *userProfileImage;
-@property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
-@property (strong, nonatomic) IBOutlet UIButton *announceButton;
-@property (strong, nonatomic) IBOutlet UITableView *menuTableView;
-@property (strong, nonatomic) UIActionSheet *mealPickerActionSheet;
-@property (retain, nonatomic) NSArray *mealTypes;
-
-@property (strong, nonatomic) NSObject<FBGraphPlace> *selectedPlace;
-@property (strong, nonatomic) NSString *selectedMeal;
+@property (retain, nonatomic) NSArray *allFriends;
+@property (strong, nonatomic) NSString *friendName;
 @property (strong, nonatomic) NSArray *selectedFriends;
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) FBCacheDescriptor *placeCacheDescriptor;
-@property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) FBRequestConnection *requestConnection;
 
 @end
 
 @implementation SCViewController
-@synthesize userNameLabel = _userNameLabel;
-@synthesize userProfileImage = _userProfileImage;
-@synthesize selectedPlace = _selectedPlace;
-@synthesize selectedMeal = _selectedMeal;
+@synthesize friendName = _friendName;
 @synthesize selectedFriends = _selectedFriends;
-@synthesize announceButton = _announceButton;
-@synthesize menuTableView = _menuTableView;
-@synthesize locationManager = _locationManager;
-@synthesize mealPickerActionSheet = _mealPickerActionSheet;
-@synthesize activityIndicator = _activityIndicator;
+
 @synthesize settingsViewController = _settingsViewController;
-@synthesize mealTypes = _mealTypes;
-@synthesize placeCacheDescriptor = _placeCacheDescriptor;
+@synthesize allFriends = _allFriends;
+@synthesize requestConnection = _requestConnection;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -57,19 +40,7 @@ UIActionSheetDelegate>
     }
     return self;
 }
-// Displays the user's name and profile picture so they are aware of the Facebook
-// identity they are logged in as.
-- (void)populateUserDetails {
-    if (FBSession.activeSession.isOpen) {
-        [[FBRequest requestForMe] startWithCompletionHandler:
-         ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
-             if (!error) {
-                 self.userNameLabel.text = user.name;
-                 self.userProfileImage.profileID = [user objectForKey:@"id"];
-             }
-         }];
-    }
-}
+
 
 - (void)viewDidLoad
 {
@@ -77,10 +48,134 @@ UIActionSheetDelegate>
     self.title = @"HOT OR NOT";
 	// Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithTitle:@"Log out"
+                                              initWithTitle:@"Profile"
                                               style:UIBarButtonItemStyleBordered
                                               target:self
                                               action:@selector(settingsButtonWasPressed:)];
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (FBSession.activeSession.isOpen) {
+        //TODO
+    }
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    if (FBSession.activeSession.isOpen) {
+        // login is integrated with the send button -- so if open, we send
+        NSLog(@"start to request");
+        [self sendRequests];
+        
+    } else {
+        [FBSession openActiveSessionWithReadPermissions:nil
+                                           allowLoginUI:YES
+                                      completionHandler:^(FBSession *session,
+                                                          FBSessionState status,
+                                                          NSError *error) {
+                                          // if login fails for any reason, we alert
+                                          if (error) {
+                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                              message:error.localizedDescription
+                                                                                             delegate:nil
+                                                                                    cancelButtonTitle:@"OK"
+                                                                                    otherButtonTitles:nil];
+                                              [alert show];
+                                              // if otherwise we check to see if the session is open, an alternative to
+                                              // to the FB_ISSESSIONOPENWITHSTATE helper-macro would be to check the isOpen
+                                              // property of the session object; the macros are useful, however, for more
+                                              // detailed state checking for FBSession objects
+                                          } else if (FB_ISSESSIONOPENWITHSTATE(status)) {
+                                              // send our requests if we successfully logged in
+                                              [self sendRequests];
+                                          }
+                                      }];
+    }
+
+}
+
+#pragma mark -  get a list of friends
+
+// Read the ids to request from textObjectID and generate a FBRequest
+// object for each one.  Add these to the FBRequestConnection and
+// then connect to Facebook to get results.  Store the FBRequestConnection
+// in case we need to cancel it before it returns.
+//
+// When a request returns results, call requestComplete:result:error.
+//
+- (void)sendRequests {
+    //request for user's friends list
+    FBRequest *request = [FBRequest  requestForMyFriends];
+    
+    // create the connection object
+    FBRequestConnection *newConnection = [[FBRequestConnection alloc] init];
+        
+    // create a handler block to handle the results of the request for fbid's profile
+    FBRequestHandler handler =
+    ^(FBRequestConnection *connection, id result, NSError *error) {
+        // output the results of the request
+        [self requestCompleted:connection result:result error:error];
+    };
+ 
+    
+    [newConnection addRequest:request completionHandler:handler];
+    
+    
+    // if there's an outstanding connection, just cancel
+    [self.requestConnection cancel];
+    
+    // keep track of our connection, and start it
+    self.requestConnection = newConnection;
+    [newConnection start];
+}
+
+// FBSample logic
+// Report any results.  Invoked once for each request we make.
+- (void)requestCompleted:(FBRequestConnection *)connection
+                  result:(id)result
+                   error:(NSError *)error {
+    // not the completion we were looking for...
+    if (self.requestConnection &&
+        connection != self.requestConnection) {
+        return;
+    }
+    
+    // clean this up, for posterity
+    self.requestConnection = nil;
+    
+    NSString *text;
+    if (error) {
+        // error contains details about why the request failed
+        text = error.localizedDescription;
+        NSLog(@"friend list request error: %@",text);
+    } else {
+        // Process the results
+        NSMutableArray *friendsWithApp = [[NSMutableArray alloc] init];
+        // Many results
+        if ([result isKindOfClass:[NSArray class]]) {
+            [friendsWithApp addObjectsFromArray:result];
+        } else if ([result isKindOfClass:[NSDecimalNumber class]]) {
+            [friendsWithApp addObject: [result stringValue]];
+            int count= 0;
+            for(NSString* friend in friendsWithApp)
+            {
+                count++;
+             NSLog(@"friend %d: %@",count,friend);
+            }
+        }
+    }
+}
+
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    [self.requestConnection cancel];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    
 }
 
 #pragma mark - FBUserSettingsDelegate methods
@@ -106,6 +201,10 @@ UIActionSheetDelegate>
     }
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+}
+
 -(void)settingsButtonWasPressed:(id)sender {
     if (self.settingsViewController == nil) {
         self.settingsViewController = [[FBUserSettingsViewController alloc] init];
@@ -115,27 +214,7 @@ UIActionSheetDelegate>
     [self.navigationController pushViewController:self.settingsViewController animated:YES];
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    if (FBSession.activeSession.isOpen) {
-        [self populateUserDetails];
-    }
-}
 
-- (void) viewDidAppear:(BOOL)animated {
-    if (FBSession.activeSession.isOpen) {
-        [self.locationManager startUpdatingLocation];
-    }
-}
-
-- (void)viewDidUnload {
-    [super viewDidUnload];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-
-}
 
 
 - (void)didReceiveMemoryWarning

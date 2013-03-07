@@ -26,6 +26,7 @@ isNavigating = _isNavigating;
         // open but a more advanced app could support features like user switching.
         // Otherwise extract the app link data from the url and open a new active session from it.
         NSString *appID = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"FacebookAppID"];
+        
         FBAccessTokenData *appLinkToken = [FBAccessTokenData createTokenFromFacebookURL:url
                                                                                   appID:appID
                                                                         urlSchemeSuffix:nil];

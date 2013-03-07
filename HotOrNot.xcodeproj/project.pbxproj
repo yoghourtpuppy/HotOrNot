@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6143492316E90FA900852CCA /* FBUserSettingsViewResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6143492216E90FA900852CCA /* FBUserSettingsViewResources.bundle */; };
 		61A9854F16E83C12007863A0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9854E16E83C12007863A0 /* UIKit.framework */; };
 		61A9855116E83C12007863A0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9855016E83C12007863A0 /* Foundation.framework */; };
 		61A9855316E83C12007863A0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9855216E83C12007863A0 /* CoreGraphics.framework */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6143492216E90FA900852CCA /* FBUserSettingsViewResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBUserSettingsViewResources.bundle; sourceTree = "<group>"; };
 		61A9854A16E83C12007863A0 /* HotOrNot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotOrNot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A9854E16E83C12007863A0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		61A9855016E83C12007863A0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -128,6 +130,7 @@
 		61A9854D16E83C12007863A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6143492216E90FA900852CCA /* FBUserSettingsViewResources.bundle */,
 				61A9858D16E83D2D007863A0 /* FacebookSDKResources.bundle */,
 				61A9858916E83C8E007863A0 /* FacebookSDK.framework */,
 				61A9854E16E83C12007863A0 /* UIKit.framework */,
@@ -266,6 +269,7 @@
 				61A9856B16E83C12007863A0 /* SCViewController.xib in Resources */,
 				61A9858E16E83D2D007863A0 /* FacebookSDKResources.bundle in Resources */,
 				61A9859916E83E43007863A0 /* SCLoginViewController.xib in Resources */,
+				6143492316E90FA900852CCA /* FBUserSettingsViewResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +495,7 @@
 				61A9858516E83C12007863A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		61A9858616E83C12007863A0 /* Build configuration list for PBXNativeTarget "HotOrNotTests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +504,7 @@
 				61A9858816E83C12007863A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
