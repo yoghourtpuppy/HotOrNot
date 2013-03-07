@@ -18,6 +18,8 @@ UIActionSheetDelegate>
 
 @property (strong, nonatomic) FBUserSettingsViewController *settingsViewController;
 @property (retain, nonatomic) NSArray *allFriends;
+@property (readwrite, nonatomic) int friendCount;
+
 @property (strong, nonatomic) NSString *friendName;
 @property (strong, nonatomic) NSArray *selectedFriends;
 @property (strong, nonatomic) FBRequestConnection *requestConnection;
@@ -31,6 +33,7 @@ UIActionSheetDelegate>
 @synthesize settingsViewController = _settingsViewController;
 @synthesize allFriends = _allFriends;
 @synthesize requestConnection = _requestConnection;
+@synthesize friendCount = _friendCount;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -48,7 +51,7 @@ UIActionSheetDelegate>
     self.title = @"HOT OR NOT";
 	// Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithTitle:@"Profile"
+                                              initWithTitle:@"Restart"
                                               style:UIBarButtonItemStyleBordered
                                               target:self
                                               action:@selector(settingsButtonWasPressed:)];
@@ -77,11 +80,11 @@ UIActionSheetDelegate>
                                                           NSError *error) {
                                           // if login fails for any reason, we alert
                                           if (error) {
-                                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                                              message:error.localizedDescription
-                                                                                             delegate:nil
-                                                                                    cancelButtonTitle:@"OK"
-                                                                                    otherButtonTitles:nil];
+                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                essage:error.localizedDescription
+                                                delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
                                               [alert show];
                                               // if otherwise we check to see if the session is open, an alternative to
                                               // to the FB_ISSESSIONOPENWITHSTATE helper-macro would be to check the isOpen
@@ -92,7 +95,7 @@ UIActionSheetDelegate>
                                               [self sendRequests];
                                           }
                                       }];
-    }
+}
 
 }
 
@@ -151,19 +154,11 @@ UIActionSheetDelegate>
         text = error.localizedDescription;
         NSLog(@"friend list request error: %@",text);
     } else {
-        // Process the results
-        NSMutableArray *friendsWithApp = [[NSMutableArray alloc] init];
-        // Many results
-        if ([result isKindOfClass:[NSArray class]]) {
-            [friendsWithApp addObjectsFromArray:result];
-        } else if ([result isKindOfClass:[NSDecimalNumber class]]) {
-            [friendsWithApp addObject: [result stringValue]];
-            int count= 0;
-            for(NSString* friend in friendsWithApp)
-            {
-                count++;
-             NSLog(@"friend %d: %@",count,friend);
-            }
+        self.allFriends = [result objectForKey:@"data"];
+        self.friendCount = self.allFriends.count;
+        NSLog(@"Found: %i friends", self.allFriends.count);
+        for (NSDictionary<FBGraphUser>* friend in self.allFriends) {
+            NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
         }
     }
 }
@@ -206,12 +201,8 @@ UIActionSheetDelegate>
 }
 
 -(void)settingsButtonWasPressed:(id)sender {
-    if (self.settingsViewController == nil) {
-        self.settingsViewController = [[FBUserSettingsViewController alloc] init];
-        self.settingsViewController.delegate = self;
-    }
+
     
-    [self.navigationController pushViewController:self.settingsViewController animated:YES];
 }
 
 
