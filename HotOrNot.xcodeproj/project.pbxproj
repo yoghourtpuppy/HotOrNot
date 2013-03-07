@@ -23,6 +23,13 @@
 		61A9857516E83C12007863A0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9855016E83C12007863A0 /* Foundation.framework */; };
 		61A9857D16E83C12007863A0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 61A9857B16E83C12007863A0 /* InfoPlist.strings */; };
 		61A9858016E83C12007863A0 /* HotOrNotTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A9857F16E83C12007863A0 /* HotOrNotTests.m */; };
+		61A9858A16E83C8E007863A0 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9858916E83C8E007863A0 /* FacebookSDK.framework */; };
+		61A9858E16E83D2D007863A0 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 61A9858D16E83D2D007863A0 /* FacebookSDKResources.bundle */; };
+		61A9859016E83D5E007863A0 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9858F16E83D5E007863A0 /* Social.framework */; };
+		61A9859216E83D65007863A0 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9859116E83D65007863A0 /* Accounts.framework */; };
+		61A9859416E83D6D007863A0 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9859316E83D6D007863A0 /* AdSupport.framework */; };
+		61A9859816E83E43007863A0 /* SCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A9859616E83E43007863A0 /* SCLoginViewController.m */; };
+		61A9859916E83E43007863A0 /* SCLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61A9859716E83E43007863A0 /* SCLoginViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +65,14 @@
 		61A9857C16E83C12007863A0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		61A9857E16E83C12007863A0 /* HotOrNotTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HotOrNotTests.h; sourceTree = "<group>"; };
 		61A9857F16E83C12007863A0 /* HotOrNotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HotOrNotTests.m; sourceTree = "<group>"; };
+		61A9858916E83C8E007863A0 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		61A9858D16E83D2D007863A0 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		61A9858F16E83D5E007863A0 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		61A9859116E83D65007863A0 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		61A9859316E83D6D007863A0 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		61A9859516E83E43007863A0 /* SCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLoginViewController.h; sourceTree = "<group>"; };
+		61A9859616E83E43007863A0 /* SCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLoginViewController.m; sourceTree = "<group>"; };
+		61A9859716E83E43007863A0 /* SCLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCLoginViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,9 +80,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61A9859416E83D6D007863A0 /* AdSupport.framework in Frameworks */,
+				61A9859216E83D65007863A0 /* Accounts.framework in Frameworks */,
+				61A9859016E83D5E007863A0 /* Social.framework in Frameworks */,
 				61A9854F16E83C12007863A0 /* UIKit.framework in Frameworks */,
 				61A9855116E83C12007863A0 /* Foundation.framework in Frameworks */,
 				61A9855316E83C12007863A0 /* CoreGraphics.framework in Frameworks */,
+				61A9858A16E83C8E007863A0 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +106,9 @@
 		61A9853F16E83C12007863A0 = {
 			isa = PBXGroup;
 			children = (
+				61A9859316E83D6D007863A0 /* AdSupport.framework */,
+				61A9859116E83D65007863A0 /* Accounts.framework */,
+				61A9858F16E83D5E007863A0 /* Social.framework */,
 				61A9855416E83C12007863A0 /* HotOrNot */,
 				61A9857816E83C12007863A0 /* HotOrNotTests */,
 				61A9854D16E83C12007863A0 /* Frameworks */,
@@ -106,6 +128,8 @@
 		61A9854D16E83C12007863A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				61A9858D16E83D2D007863A0 /* FacebookSDKResources.bundle */,
+				61A9858916E83C8E007863A0 /* FacebookSDK.framework */,
 				61A9854E16E83C12007863A0 /* UIKit.framework */,
 				61A9855016E83C12007863A0 /* Foundation.framework */,
 				61A9855216E83C12007863A0 /* CoreGraphics.framework */,
@@ -119,6 +143,9 @@
 			children = (
 				61A9855D16E83C12007863A0 /* SCAppDelegate.h */,
 				61A9855E16E83C12007863A0 /* SCAppDelegate.m */,
+				61A9859516E83E43007863A0 /* SCLoginViewController.h */,
+				61A9859616E83E43007863A0 /* SCLoginViewController.m */,
+				61A9859716E83E43007863A0 /* SCLoginViewController.xib */,
 				61A9856616E83C12007863A0 /* SCViewController.h */,
 				61A9856716E83C12007863A0 /* SCViewController.m */,
 				61A9856916E83C12007863A0 /* SCViewController.xib */,
@@ -237,6 +264,8 @@
 				61A9856316E83C12007863A0 /* Default@2x.png in Resources */,
 				61A9856516E83C12007863A0 /* Default-568h@2x.png in Resources */,
 				61A9856B16E83C12007863A0 /* SCViewController.xib in Resources */,
+				61A9858E16E83D2D007863A0 /* FacebookSDKResources.bundle in Resources */,
+				61A9859916E83E43007863A0 /* SCLoginViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +303,7 @@
 				61A9855B16E83C12007863A0 /* main.m in Sources */,
 				61A9855F16E83C12007863A0 /* SCAppDelegate.m in Sources */,
 				61A9856816E83C12007863A0 /* SCViewController.m in Sources */,
+				61A9859816E83E43007863A0 /* SCLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,9 +403,17 @@
 		61A9858416E83C12007863A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HotOrNot/HotOrNot-Prefix.pch";
 				INFOPLIST_FILE = "HotOrNot/HotOrNot-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lsqlite3.0",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -384,9 +422,17 @@
 		61A9858516E83C12007863A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HotOrNot/HotOrNot-Prefix.pch";
 				INFOPLIST_FILE = "HotOrNot/HotOrNot-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lsqlite3.0",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
