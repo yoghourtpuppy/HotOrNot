@@ -9,6 +9,8 @@
 #import "SCsubview.h"
 
 @implementation SCsubview
+@synthesize fButton1=_fButton1;
+@synthesize fButton2=_fButton2;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -20,14 +22,12 @@
                          owner:self
                          options:nil];
          self = [nib objectAtIndex:0];
+        self.fButton1.tag = 1000;
+        self.fButton2.tag = 1001;
     }
     return self;
 }
 
-- (void)setupThisSubView:(NSString *) labelText
-{
-    
-}
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -38,4 +38,8 @@
 }
 */
 
+- (void)dealloc {
+    [_fButton2 release];
+    [super dealloc];
+}
 @end

@@ -196,8 +196,9 @@
     //add pictures to two buttons
     SCsubview *fsubview = [[SCsubview alloc]init];
     [self.view addSubview:fsubview];
-    fsubview.frame = CGRectMake(0,0,400,290);
-    //[fsubview.fButton1 setImage:self.img1 forState:UIControlStateNormal];
+    fsubview.frame = CGRectMake(0,0,480,290);
+    [fsubview.fButton1 setImage:self.img1 forState:UIControlStateNormal];
+    [fsubview.fButton2 setImage:self.img2 forState:UIControlStateNormal];
     //button animation: right to the center of screen
      
     
