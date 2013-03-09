@@ -10,27 +10,39 @@
 #import "SCAppDelegate.h"
 #import "SCLoginViewController.h"
 
-@interface SCViewController() < UITableViewDataSource,
-FBFriendPickerDelegate,
-UINavigationControllerDelegate,
-FBPlacePickerDelegate,
-UIActionSheetDelegate>
+@interface SCViewController() <UINavigationControllerDelegate>
 
 @property (retain, nonatomic) NSArray *allFriends;
 @property (readwrite, nonatomic) int friendCount;
-
-@property (strong, nonatomic) NSString *friendName;
+@property (strong, nonatomic) NSString * name1;
+@property (strong, nonatomic) NSString * name2;
+@property (retain, nonatomic) UIImage* img1;
+@property (retain, nonatomic) UIImage* img2;
 @property (strong, nonatomic) NSMutableArray *selectedFriends;
-@property (strong, nonatomic) FBRequestConnection *requestConnection;
 
 @end
 
 @implementation SCViewController
-@synthesize friendName = _friendName;
+
 @synthesize selectedFriends = _selectedFriends;
 @synthesize allFriends = _allFriends;
-@synthesize requestConnection = _requestConnection;
 @synthesize friendCount = _friendCount;
+@synthesize name1 =_name1;
+@synthesize name2 =_name2;
+@synthesize img1=_img1;
+@synthesize img2=_img2;
+
+
+- (void) dealloc
+{
+    _allFriends = nil;
+    _selectedFriends = nil;
+    _img1 = nil;
+    _img2 = nil;
+    
+    [_picView release];
+    [super dealloc];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -46,23 +58,20 @@ UIActionSheetDelegate>
 {
     [super viewDidLoad];
     self.title = @"HOT OR NOT";
-	// Do any additional setup after loading the view, typically from a nib.
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
                                               initWithTitle:@"Restart"
                                               style:UIBarButtonItemStyleBordered
                                               target:self
-                                              action:@selector(settingsButtonWasPressed:)];
-    
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+                                              action:@selector(restartButtonWasPressed:)];
     
     if (FBSession.activeSession.isOpen) {
         NSLog(@"start to request");
-        [self getFriendRequests];
-        //NSDictionary<FBGraphUser>* friend0 = [self.allFriends objectAtIndex:0];
-        //[self getPicRequestsWithid:friend0.id];
+        [self getPicRequests];
+        NSLog(@"%d, %d",rand(),self.friendCount);
+        //[self showFriends];
+
+        
     }else {
         [FBSession openActiveSessionWithReadPermissions:nil
                                            allowLoginUI:YES
@@ -71,24 +80,22 @@ UIActionSheetDelegate>
                                                           NSError *error) {
                                           // if login fails for any reason, we alert
                                           if (error) {
-                                              UIAlertView *alert = [[UIAlertView alloc]
-                                                initWithTitle:@"Error"
-                                                message:error.localizedDescription
-                                                delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil];
-                                              [alert show];
-                                              // if otherwise we check to see if the session is open, an alternative to
-                                              // to the FB_ISSESSIONOPENWITHSTATE helper-macro would be to check the isOpen
-                                              // property of the session object; the macros are useful, however, for more
-                                              // detailed state checking for FBSession objects
+                                              [self printError:nil error:error];
                                           } else if (FB_ISSESSIONOPENWITHSTATE(status)) {
                                               // send our requests if we successfully logged in
-                                              [self getFriendRequests];
+                                              [self getPicRequests];
                                           }
                                       }];
     }
+    
+    //
 
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -97,166 +104,126 @@ UIActionSheetDelegate>
     } 
 }
 
-#pragma mark -  get a list of friends
-
-// Read the ids to request from textObjectID and generate a FBRequest
-// object for each one.  Add these to the FBRequestConnection and
-// then connect to Facebook to get results.  Store the FBRequestConnection
-// in case we need to cancel it before it returns.
-//
-// When a request returns results, call requestComplete:result:error.
-//
-- (void)getFriendRequests {
-    //request for user's friends list
-    FBRequest *requestFriend = [FBRequest  requestForMyFriends];
-    //FBRequest *requestPicture = [FBRequest ];
-    // create the connection object
-    FBRequestConnection *newConnection = [[FBRequestConnection alloc] init];
-        
-    // create a handler block to handle the results of the request for fbid's profile
-    FBRequestHandler handler =
-    ^(FBRequestConnection *connection, id result, NSError *error) {
-        // not the completion we were looking for...
-        if (self.requestConnection &&
-            connection != self.requestConnection) {
-            return;
-        }
-        
-        // clean this up, for posterity
-        self.requestConnection = nil;
-        
-        NSString *text;
-        if (error) {
-            // error contains details about why the request failed
-            text = error.localizedDescription;
-            NSLog(@"friend list request error: %@",text);
-        } else {
-            self.allFriends = [result objectForKey:@"data"];
-            self.friendCount = self.allFriends.count;
-            NSLog(@"Found: %i friends", self.allFriends.count);
-            for (NSDictionary<FBGraphUser>* friend in self.allFriends) {
-                NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
-            }
-        }
-
-    };
-    NSDictionary<FBGraphUser>* friend0 = [self.allFriends objectAtIndex:0];
-    NSString * graphPath = [NSString stringWithFormat:@"%@/picture?width=200&height=200", friend0.id];
-    FBRequest *requestPic = [FBRequest requestWithGraphPath:graphPath parameters:nil HTTPMethod:@"get"];
-
-    FBRequestHandler handler1 =
-    ^(FBRequestConnection *connection, id result, NSError *error) {
-        // not the completion we were looking for...
-        if (self.requestConnection &&
-            connection != self.requestConnection) {
-            return;
-        }
-        
-        // clean this up, for posterity
-        self.requestConnection = nil;
-        
-        NSString *text;
-        if (error) {
-            // error contains details about why the request failed
-            text = error.localizedDescription;
-            NSLog(@"friend list request error: %@",text);
-        } else {
-            NSString * url= [result objectForKey:@"url"];
-            NSLog(@"url: %@",url);
-            
-        }
-        
-    };
-    
-    [newConnection addRequest:requestFriend completionHandler:handler];
-    [newConnection addRequest:requestPic completionHandler:handler1];
-    // if there's an outstanding connection, just cancel
-    [self.requestConnection cancel];
-    
-    // keep track of our connection, and start it
-    self.requestConnection = newConnection;
-    [newConnection start];
-}
-
-- (void)getPicRequestsWithid: (NSString *)userId{
-    //request for user's friends list
-    NSString * graphPath = [NSString stringWithFormat:@"%@/picture?width=200&height=200", userId];
-    FBRequest *requestPic = [FBRequest requestWithGraphPath:graphPath parameters:nil HTTPMethod:@"get"];
-    FBRequestConnection *newConnection = [[FBRequestConnection alloc] init];
-    FBRequestHandler handler =
-    ^(FBRequestConnection *connection, id result, NSError *error) {
-        // not the completion we were looking for...
-        if (self.requestConnection &&
-            connection != self.requestConnection) {
-            return;
-        }
-        
-        // clean this up, for posterity
-        self.requestConnection = nil;
-        
-        NSString *text;
-        if (error) {
-            // error contains details about why the request failed
-            text = error.localizedDescription;
-            NSLog(@"friend list request error: %@",text);
-        } else {
-            NSString * url= [result objectForKey:@"url"];
-            NSLog(@"url: %@",url);
-            
-        }
-
-    };
-    [newConnection addRequest:requestPic completionHandler:handler];
-    [self.requestConnection cancel];
-    self.requestConnection = newConnection;
-    [newConnection start];
-}
-
-
 - (void)viewDidUnload {
     [super viewDidUnload];
-    [self.requestConnection cancel];
-    self.selectedFriends = nil;
-    self.allFriends = nil;
+    
+    _allFriends = nil;
+    _selectedFriends = nil;
+    _img1 = nil;
+    _img2 = nil;
+     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     
 }
 
-#pragma mark - FBUserSettingsDelegate methods
 
-- (void)loginViewControllerDidLogUserOut:(id)sender {
-    // Facebook SDK * login flow *
-    // There are many ways to implement the Facebook login flow.
-    // In this sample, the FBLoginView delegate (SCLoginViewController)
-    // will already handle logging out so this method is a no-op.
+//restart button
+-(void)restartButtonWasPressed:(id)sender {
+    
+    
 }
 
-- (void)loginViewController:(id)sender receivedError:(NSError *)error{
-    // Facebook SDK * login flow *
-    // There are many ways to implement the Facebook login flow.
-    // In this sample, the FBUserSettingsViewController is only presented
-    // as a log out option after the user has been authenticated, so
-    // no real errors should occur. If the FBUserSettingsViewController
-    // had been the entry point to the app, then this error handler should
-    // be as rigorous as the FBLoginView delegate (SCLoginViewController)
-    // in order to handle login errors.
-    if (error) {
-        NSLog(@"Unexpected error sent to the FBUserSettingsViewController delegate: %@", error);
+#pragma mark -  get pictures and name of user's all friends
+
+- (void)getPicRequests {
+    [FBRequestConnection startWithGraphPath:@"/me/friends?fields=name,picture.height(200).width(200)"
+                          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                              if(error) {
+                                  [self printError:@"Error requesting /me/friends?fields=name,picture.height(200).width(200)" error:error];
+                                  return;
+                              }
+                              self.allFriends = (NSArray*)[result data];
+                              self.friendCount = [self.allFriends count];
+                              NSLog(@"You have %d friends", self.friendCount);
+                              for(int i = 0; i < self.friendCount; i++)
+                              {
+                                  NSDictionary* friend = [self.allFriends objectAtIndex:i];
+                                  NSLog(@"friend name: %@", [friend objectForKey:@"name"]);
+                                  NSDictionary* picture = [friend objectForKey:@"picture"];
+                                  NSDictionary* data = [picture objectForKey:@"data"];
+                                  NSLog(@"photo url: %@", [data objectForKey:@"url"]);
+                                  
+                              }
+                              [self showFriends];
+                              
+                        }];
+    
+}
+
+- (void)showFriends{
+    //select two friends from friends list randomly
+    
+    int randNum1 = 0, randNum2 = 0;
+    while(randNum1 == randNum2){
+        NSLog(@"%d, %d",rand(),self.friendCount);
+        randNum1 = rand() % (self.friendCount-1);
+        randNum2 = rand() % (self.friendCount-1);
+    }
+    NSLog(@"%d",randNum1);
+    NSLog(@"%d",randNum2);
+    
+    //get friend name
+    NSDictionary* friend1 = [self.allFriends objectAtIndex:randNum1];
+    self.name1 = [friend1 objectForKey:@"name"];
+    NSDictionary* friend2 = [self.allFriends objectAtIndex:randNum2];
+    self.name2 = [friend2 objectForKey:@"name"];
+    //get friend1 picture url
+    NSDictionary* picture1 = [friend1 objectForKey:@"picture"];
+    NSDictionary* data1 = [picture1 objectForKey:@"data"];
+    NSString *path1 = [data1 objectForKey:@"url"];
+    NSURL *url1 = [NSURL URLWithString:path1];
+    NSData *data = [NSData dataWithContentsOfURL:url1];
+    self.img1 = [[UIImage alloc] initWithData:data];//dealloc
+    CGSize size1 = self.img1.size;
+    //get friend2 picture url
+    NSDictionary* picture2 = [friend2 objectForKey:@"picture"];
+    NSDictionary* data2 = [picture2 objectForKey:@"data"];
+    NSString *path2 = [data2 objectForKey:@"url"];
+    NSURL *url2 = [NSURL URLWithString:path2];
+    data = [NSData dataWithContentsOfURL:url2];
+    self.img2 = [[UIImage alloc] initWithData:data];//dealloc
+    CGSize size2 = self.img2.size;
+    //add pictures to two buttons
+    //button animation: right to the center of screen
+     
+    
+}
+
+// Shared error handler
+-(void)printError:(NSString*)message error:(NSError*)error {
+    if(message) {
+        NSLog(@"%@", message);
+    }
+    
+    // works for 1 FBRequest per FBRequestConnection
+    int userInfoCode = [error.userInfo[@"com.facebook.FBiOSSDK:ParsedJSONResponseKey"][0][@"body"][@"error"][@"code"] integerValue];
+    NSString* userInfoMessage = error.userInfo[@"com.facebook.FBiOSSDK:ParsedJSONResponseKey"][0][@"body"][@"error"][@"message"];
+    
+    // outer error
+    NSLog(@"Error: %@", error);
+    NSLog(@"Error code: %d", error.code);
+    NSLog(@"Error message: %@", error.localizedDescription);
+    
+    // inner error
+    NSLog(@"Error code: %d", userInfoCode);
+    NSLog(@"Error message: %@", userInfoMessage);
+    if(userInfoCode == 2500) {
+        UIAlertView* view = [[UIAlertView alloc]initWithTitle:@"Facebook"
+                                                      message:@"You're not logged in."
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [view show];
+        });
     }
 }
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 }
-
--(void)settingsButtonWasPressed:(id)sender {
-
-    
-}
-
-
-
 
 - (void)didReceiveMemoryWarning
 {

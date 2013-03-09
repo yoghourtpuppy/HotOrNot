@@ -11,17 +11,7 @@
 #import "SCViewController.h"
 
 @implementation SCLoginViewController
-/*
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Facebook SDK * pro-tip *
-        // We wire up the FBLoginView using the interface builder
-        // but we could have also explicitly wired its delegate here.
-    }
-    return self;
-}
-*/
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
