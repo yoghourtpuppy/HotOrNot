@@ -40,7 +40,6 @@
     _img1 = nil;
     _img2 = nil;
     
-    [_picView release];
     [super dealloc];
 }
 
