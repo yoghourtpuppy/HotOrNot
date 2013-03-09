@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "SCsubview.h"
 
 @interface SCViewController : UIViewController<FBUserSettingsDelegate>
+
 
 @end
 

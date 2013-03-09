@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		612DC47F16EAED7500E61AA6 /* SCsubview.m in Sources */ = {isa = PBXBuildFile; fileRef = 612DC47E16EAED7500E61AA6 /* SCsubview.m */; };
+		612DC48216EAEFF800E61AA6 /* subView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612DC48116EAEFF800E61AA6 /* subView.xib */; };
 		6143492316E90FA900852CCA /* FBUserSettingsViewResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6143492216E90FA900852CCA /* FBUserSettingsViewResources.bundle */; };
 		61A9854F16E83C12007863A0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9854E16E83C12007863A0 /* UIKit.framework */; };
 		61A9855116E83C12007863A0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9855016E83C12007863A0 /* Foundation.framework */; };
@@ -44,6 +46,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		612DC47D16EAED7500E61AA6 /* SCsubview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCsubview.h; sourceTree = "<group>"; };
+		612DC47E16EAED7500E61AA6 /* SCsubview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCsubview.m; sourceTree = "<group>"; };
+		612DC48116EAEFF800E61AA6 /* subView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = subView.xib; sourceTree = "<group>"; };
 		6143492216E90FA900852CCA /* FBUserSettingsViewResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBUserSettingsViewResources.bundle; sourceTree = "<group>"; };
 		61A9854A16E83C12007863A0 /* HotOrNot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotOrNot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A9854E16E83C12007863A0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -152,6 +157,9 @@
 				61A9856616E83C12007863A0 /* SCViewController.h */,
 				61A9856716E83C12007863A0 /* SCViewController.m */,
 				61A9856916E83C12007863A0 /* SCViewController.xib */,
+				612DC47D16EAED7500E61AA6 /* SCsubview.h */,
+				612DC47E16EAED7500E61AA6 /* SCsubview.m */,
+				612DC48116EAEFF800E61AA6 /* subView.xib */,
 				61A9855516E83C12007863A0 /* Supporting Files */,
 			);
 			path = HotOrNot;
@@ -270,6 +278,7 @@
 				61A9858E16E83D2D007863A0 /* FacebookSDKResources.bundle in Resources */,
 				61A9859916E83E43007863A0 /* SCLoginViewController.xib in Resources */,
 				6143492316E90FA900852CCA /* FBUserSettingsViewResources.bundle in Resources */,
+				612DC48216EAEFF800E61AA6 /* subView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +317,7 @@
 				61A9855F16E83C12007863A0 /* SCAppDelegate.m in Sources */,
 				61A9856816E83C12007863A0 /* SCViewController.m in Sources */,
 				61A9859816E83E43007863A0 /* SCLoginViewController.m in Sources */,
+				612DC47F16EAED7500E61AA6 /* SCsubview.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

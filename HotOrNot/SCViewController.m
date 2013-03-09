@@ -63,6 +63,15 @@
                                               style:UIBarButtonItemStyleBordered
                                               target:self
                                               action:@selector(restartButtonWasPressed:)];
+    /*
+    CGRect viewRect = CGRectMake(0,0,480,290);
+    UIView* myview = [[UIView alloc] initWithFrame:viewRect];
+    [self.view addSubview:myview];
+    
+    [self.fButton1 setTitle:@"aaa" forState:UIControlStateNormal];
+    //[myview addSubview:self.fButton1];
+    */
+ 
     
     if (FBSession.activeSession.isOpen) {
         NSLog(@"start to request");
@@ -94,6 +103,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     
 }
 
@@ -184,6 +194,10 @@
     self.img2 = [[UIImage alloc] initWithData:data];//dealloc
     CGSize size2 = self.img2.size;
     //add pictures to two buttons
+    SCsubview *fsubview = [[SCsubview alloc]init];
+    [self.view addSubview:fsubview];
+    fsubview.frame = CGRectMake(0,0,400,290);
+    //[fsubview.fButton1 setImage:self.img1 forState:UIControlStateNormal];
     //button animation: right to the center of screen
      
     

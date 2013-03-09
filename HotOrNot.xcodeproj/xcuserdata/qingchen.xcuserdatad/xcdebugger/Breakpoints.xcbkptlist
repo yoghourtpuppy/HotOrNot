@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HotOrNot/SCViewController.m"
-         timestampString = "384491441.21707"
+         timestampString = "384497237.840633"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "158"
-         endingLineNumber = "158"
+         startingLineNumber = "167"
+         endingLineNumber = "167"
          landmarkName = "-showFriends"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HotOrNot/SCViewController.m"
-         timestampString = "384491441.21707"
+         timestampString = "384497237.840633"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "151"
-         endingLineNumber = "151"
+         startingLineNumber = "160"
+         endingLineNumber = "160"
          landmarkName = "-getPicRequests"
          landmarkType = "5">
       </FileBreakpoint>

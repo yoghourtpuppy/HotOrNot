@@ -12,6 +12,15 @@
 @class SCViewController;
 @class SCLoginViewController;
 
+@protocol  SCAppDelegate<NSObject>
+
+
+
+-(void) view1ButtonPressed;
+
+
+
+@end
 // Scrumptious sample application
 //
 // The purpose of the Scrumptious sample application is to demonstrate a complete real-world
