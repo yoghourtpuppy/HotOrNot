@@ -9,28 +9,40 @@
 #import "SCViewController.h"
 #import "SCAppDelegate.h"
 #import "SCLoginViewController.h"
+#import "SCselectedFriend.h"
 
 @interface SCViewController() <UINavigationControllerDelegate>
 
 @property (retain, nonatomic) NSArray *allFriends;
-@property (readwrite, nonatomic) int friendCount;
-@property (strong, nonatomic) NSString * name1;
-@property (strong, nonatomic) NSString * name2;
+@property (nonatomic) NSInteger friendCount;
+@property (copy, nonatomic) NSString * id1;
+@property (copy, nonatomic) NSString * id2;
+@property (copy, nonatomic) NSString * name1;
+@property (copy, nonatomic) NSString * name2;
 @property (retain, nonatomic) UIImage* img1;
 @property (retain, nonatomic) UIImage* img2;
-@property (strong, nonatomic) NSMutableArray *selectedFriends;
-
+@property (retain, nonatomic) NSMutableArray *selectedFriends;
+//@property(retain,nonatomic) NSMutableDictionary *selectedFriend;
+@property (retain,nonatomic) SCsubview *subview;
+@property (nonatomic) BOOL b1clicked;
+@property (nonatomic) BOOL b2clicked;
 @end
 
 @implementation SCViewController
 
 @synthesize selectedFriends = _selectedFriends;
+//@synthesize selectedFriend = _selectedFriend;
 @synthesize allFriends = _allFriends;
 @synthesize friendCount = _friendCount;
+@synthesize id1 = _id1;
+@synthesize id2 = _id2;
 @synthesize name1 =_name1;
 @synthesize name2 =_name2;
 @synthesize img1=_img1;
 @synthesize img2=_img2;
+@synthesize subview=_subview;
+@synthesize b1clicked = _b1clicked;
+@synthesize b2clicked = _b2clicked;
 
 
 - (void) dealloc
@@ -39,7 +51,7 @@
     _selectedFriends = nil;
     _img1 = nil;
     _img2 = nil;
-    
+    [_subview release];
     [super dealloc];
 }
 
@@ -48,6 +60,11 @@
     if (self) {
         // Custom initialization
         self.navigationItem.hidesBackButton = YES;
+        //add subview to current view
+        _subview = [[SCsubview alloc]init];
+        _subview.frame = CGRectMake(480,30,480,290);
+        [self.view addSubview:_subview];
+        _subview.delegate = self;
     }
     return self;
 }
@@ -63,23 +80,12 @@
                                               style:UIBarButtonItemStyleBordered
                                               target:self
                                               action:@selector(restartButtonWasPressed:)];
-    /*
-    CGRect viewRect = CGRectMake(0,0,480,290);
-    UIView* myview = [[UIView alloc] initWithFrame:viewRect];
-    [self.view addSubview:myview];
-    
-    [self.fButton1 setTitle:@"aaa" forState:UIControlStateNormal];
-    //[myview addSubview:self.fButton1];
-    */
+   // _selectedFriends =
  
     
     if (FBSession.activeSession.isOpen) {
-        NSLog(@"start to request");
-        [self getPicRequests];
-        NSLog(@"%d, %d",rand(),self.friendCount);
-        //[self showFriends];
-
-        
+        NSLog(@"start to request and go!");
+        [self requestAndGo];
     }else {
         [FBSession openActiveSessionWithReadPermissions:nil
                                            allowLoginUI:YES
@@ -91,13 +97,10 @@
                                               [self printError:nil error:error];
                                           } else if (FB_ISSESSIONOPENWITHSTATE(status)) {
                                               // send our requests if we successfully logged in
-                                              [self getPicRequests];
+                                              [self requestAndGo];
                                           }
                                       }];
     }
-    
-    //
-
     
 }
 
@@ -115,7 +118,7 @@
 
 - (void)viewDidUnload {
     [super viewDidUnload];
-    
+    [_subview release];
     _allFriends = nil;
     _selectedFriends = nil;
     _img1 = nil;
@@ -135,26 +138,42 @@
 
 #pragma mark -  get pictures and name of user's all friends
 
-- (void)getPicRequests {
-    [FBRequestConnection startWithGraphPath:@"/me/friends?fields=name,picture.height(200).width(200)"
+- (void)requestAndGo {
+    [FBRequestConnection startWithGraphPath:@"/me/friends?fields=name,picture.height(150).width(150)"
                           completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                               if(error) {
-                                  [self printError:@"Error requesting /me/friends?fields=name,picture.height(200).width(200)" error:error];
+                                  [self printError:@"Error requesting /me/friends?fields=name,picture.height(150).width(150)" error:error];
                                   return;
                               }
-                              self.allFriends = (NSArray*)[result data];
-                              self.friendCount = [self.allFriends count];
-                              NSLog(@"You have %d friends", self.friendCount);
-                              for(int i = 0; i < self.friendCount; i++)
+                              _allFriends = (NSArray*)[result data];
+                              _friendCount = [_allFriends count];
+                              NSLog(@"You have %d friends", _friendCount);
+                              /*for test
+                              for(int i = 0; i < _friendCount; i++)
                               {
-                                  NSDictionary* friend = [self.allFriends objectAtIndex:i];
+                                  NSDictionary* friend = [_allFriends objectAtIndex:i];
                                   NSLog(@"friend name: %@", [friend objectForKey:@"name"]);
                                   NSDictionary* picture = [friend objectForKey:@"picture"];
                                   NSDictionary* data = [picture objectForKey:@"data"];
                                   NSLog(@"photo url: %@", [data objectForKey:@"url"]);
                                   
                               }
+                               */
+
                               [self showFriends];
+                              int index = 0;
+                              if(1||_b1clicked||_b2clicked){
+                                if(_b1clicked){
+                                    _b1clicked = NO;
+                                    SCselectedFriend * selectedFriend = [[SCselectedFriend alloc] initWithId:_id1 name:_name1 count:1];
+                                    selectedFriend.count = 2;
+                                    NSLog(@"count: %d",selectedFriend.count);
+                                }
+                                else if(_b2clicked){
+                                    _b1clicked = NO;
+                                }
+                                  //animation
+                              }
                               
                         }];
     
@@ -162,48 +181,61 @@
 
 - (void)showFriends{
     //select two friends from friends list randomly
-    
     int randNum1 = 0, randNum2 = 0;
     while(randNum1 == randNum2){
-        NSLog(@"%d, %d",rand(),self.friendCount);
-        randNum1 = rand() % (self.friendCount-1);
-        randNum2 = rand() % (self.friendCount-1);
+        randNum1 = arc4random() % (_friendCount-1);
+        randNum2 = arc4random() % (_friendCount-1);
     }
-    NSLog(@"%d",randNum1);
-    NSLog(@"%d",randNum2);
+    NSLog(@"%d",_friendCount);
     
     //get friend name
-    NSDictionary* friend1 = [self.allFriends objectAtIndex:randNum1];
-    self.name1 = [friend1 objectForKey:@"name"];
-    NSDictionary* friend2 = [self.allFriends objectAtIndex:randNum2];
-    self.name2 = [friend2 objectForKey:@"name"];
+    NSDictionary* friend1 = [_allFriends objectAtIndex:randNum1];
+    _name1 = [friend1 objectForKey:@"name"];
+    _id1 = [friend1 objectForKey:@"id"];
+    NSDictionary* friend2 = [_allFriends objectAtIndex:randNum2];
+    _name2 = [friend2 objectForKey:@"name"];
+    _id2 = [friend2 objectForKey:@"id"];
+    
     //get friend1 picture url
     NSDictionary* picture1 = [friend1 objectForKey:@"picture"];
     NSDictionary* data1 = [picture1 objectForKey:@"data"];
     NSString *path1 = [data1 objectForKey:@"url"];
     NSURL *url1 = [NSURL URLWithString:path1];
     NSData *data = [NSData dataWithContentsOfURL:url1];
-    self.img1 = [[UIImage alloc] initWithData:data];//dealloc
-    CGSize size1 = self.img1.size;
+    _img1 = [[UIImage alloc] initWithData:data];//dealloc
+    //CGSize size1 = _img1.size;
+    
     //get friend2 picture url
     NSDictionary* picture2 = [friend2 objectForKey:@"picture"];
     NSDictionary* data2 = [picture2 objectForKey:@"data"];
     NSString *path2 = [data2 objectForKey:@"url"];
     NSURL *url2 = [NSURL URLWithString:path2];
     data = [NSData dataWithContentsOfURL:url2];
-    self.img2 = [[UIImage alloc] initWithData:data];//dealloc
-    CGSize size2 = self.img2.size;
+    _img2 = [[UIImage alloc] initWithData:data];//dealloc
+    //CGSize size2 = _img2.size;
+    
     //add pictures to two buttons
-    SCsubview *fsubview = [[SCsubview alloc]init];
-    [self.view addSubview:fsubview];
-    fsubview.frame = CGRectMake(0,0,480,290);
-    [fsubview.fButton1 setImage:self.img1 forState:UIControlStateNormal];
-    [fsubview.fButton2 setImage:self.img2 forState:UIControlStateNormal];
-    //button animation: right to the center of screen
-     
+    [_subview.fButton1 setImage:_img1 forState:UIControlStateNormal];
+    [_subview.fButton2 setImage:_img2 forState:UIControlStateNormal];
+    
+    //view animation: right to the center of screen
+
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:0.2];
+    _subview.frame = CGRectMake(0,30,480,290);
+    [UIView commitAnimations];
     
 }
 
+-(void)button1Clicked:(UIButton *)button inView:(UIView *)view{
+    NSLog(@"the button1 is clicked in main view");
+    _b1clicked = YES;
+}
+-(void)button2Clicked:(UIButton *)button inView:(UIView *)view{
+    NSLog(@"the button2 is clicked in main view");
+    _b2clicked = YES;
+}
 // Shared error handler
 -(void)printError:(NSString*)message error:(NSError*)error {
     if(message) {

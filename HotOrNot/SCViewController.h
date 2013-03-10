@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 #import "SCsubview.h"
-
-@interface SCViewController : UIViewController<FBUserSettingsDelegate>
+@class SCsubview;
+@interface SCViewController : UIViewController<viewWithButtonDelegate>
 
 
 @end

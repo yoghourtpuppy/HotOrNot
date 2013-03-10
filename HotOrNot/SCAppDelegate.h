@@ -12,13 +12,10 @@
 @class SCViewController;
 @class SCLoginViewController;
 
-@protocol  SCAppDelegate<NSObject>
+@protocol  viewWithButtonDelegate<NSObject>
 
-
-
--(void) view1ButtonPressed;
-
-
+-(void)button1Clicked:(UIButton*)button inView:(UIView*)view;
+-(void)button2Clicked:(UIButton*)button inView:(UIView*)view;
 
 @end
 // Scrumptious sample application

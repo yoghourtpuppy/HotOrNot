@@ -33,6 +33,8 @@
 		61A9859416E83D6D007863A0 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A9859316E83D6D007863A0 /* AdSupport.framework */; };
 		61A9859816E83E43007863A0 /* SCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A9859616E83E43007863A0 /* SCLoginViewController.m */; };
 		61A9859916E83E43007863A0 /* SCLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61A9859716E83E43007863A0 /* SCLoginViewController.xib */; };
+		61C57B6116EBE98B0015D862 /* vs.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C57B6016EBE98B0015D862 /* vs.png */; };
+		61C57B6516EC1A9B0015D862 /* SCselectedFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C57B6416EC1A9B0015D862 /* SCselectedFriend.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +82,9 @@
 		61A9859516E83E43007863A0 /* SCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCLoginViewController.h; sourceTree = "<group>"; };
 		61A9859616E83E43007863A0 /* SCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCLoginViewController.m; sourceTree = "<group>"; };
 		61A9859716E83E43007863A0 /* SCLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCLoginViewController.xib; sourceTree = "<group>"; };
+		61C57B6016EBE98B0015D862 /* vs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vs.png; sourceTree = "<group>"; };
+		61C57B6316EC1A9B0015D862 /* SCselectedFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCselectedFriend.h; sourceTree = "<group>"; };
+		61C57B6416EC1A9B0015D862 /* SCselectedFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCselectedFriend.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +165,8 @@
 				612DC47D16EAED7500E61AA6 /* SCsubview.h */,
 				612DC47E16EAED7500E61AA6 /* SCsubview.m */,
 				612DC48116EAEFF800E61AA6 /* subView.xib */,
+				61C57B6316EC1A9B0015D862 /* SCselectedFriend.h */,
+				61C57B6416EC1A9B0015D862 /* SCselectedFriend.m */,
 				61A9855516E83C12007863A0 /* Supporting Files */,
 			);
 			path = HotOrNot;
@@ -170,6 +177,7 @@
 			children = (
 				61A9855616E83C12007863A0 /* HotOrNot-Info.plist */,
 				61A9855716E83C12007863A0 /* InfoPlist.strings */,
+				61C57B6016EBE98B0015D862 /* vs.png */,
 				61A9855A16E83C12007863A0 /* main.m */,
 				61A9855C16E83C12007863A0 /* HotOrNot-Prefix.pch */,
 				61A9856016E83C12007863A0 /* Default.png */,
@@ -279,6 +287,7 @@
 				61A9859916E83E43007863A0 /* SCLoginViewController.xib in Resources */,
 				6143492316E90FA900852CCA /* FBUserSettingsViewResources.bundle in Resources */,
 				612DC48216EAEFF800E61AA6 /* subView.xib in Resources */,
+				61C57B6116EBE98B0015D862 /* vs.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +327,7 @@
 				61A9856816E83C12007863A0 /* SCViewController.m in Sources */,
 				61A9859816E83E43007863A0 /* SCLoginViewController.m in Sources */,
 				612DC47F16EAED7500E61AA6 /* SCsubview.m in Sources */,
+				61C57B6516EC1A9B0015D862 /* SCselectedFriend.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
