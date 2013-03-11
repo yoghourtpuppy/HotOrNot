@@ -72,7 +72,6 @@
     _friend2 = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -95,21 +94,42 @@
     NSSortDescriptor *countDescriptor = [[NSSortDescriptor alloc] initWithKey:@"count" ascending:NO];
     NSArray *sortDescriptors = @[countDescriptor];
     NSArray *sortedArray = [_selectedFriends sortedArrayUsingDescriptors:sortDescriptors];
+    
+    /*for test
     for(int i = 0; i<10;i++){
         SCselectedFriend * sf = [sortedArray objectAtIndex:i];
         NSLog(@"%d: %@ pts: %d",i,sf.name,sf.count);
     }
+     */
     self.progressBar.hidden = YES;
     self.progressLable.hidden = YES;
+    
+    //remove the subview
     [_subview removeFromSuperview];
+    
     _result1.hidden = NO;
     _result2.hidden = NO;
+    
+    //show the result
     for(int i = 0; i<5;i++){
         SCselectedFriend * sf = [sortedArray objectAtIndex:i];
         SCselectedFriend * sf1 = [sortedArray objectAtIndex:(i+5)];
         _result1.text =[ _result1.text stringByAppendingString:[NSString stringWithFormat:@"%d.  %@   pts: %d\n\n",i,sf.name,sf.count]];
         _result2.text = [ _result2.text stringByAppendingString:[NSString stringWithFormat:@"%d.  %@   pts: %d\n\n",i+5,sf1.name,sf1.count]];
     }
+    //view animation: right to the center of screen
+    _result1.frame = CGRectMake(-480,30,230,213);
+    _result2.frame = CGRectMake(480,30,230,213);
+    [UIView animateWithDuration:0.5
+                          delay:0.0
+                        options: UIViewAnimationCurveEaseOut
+                     animations:^{
+                         _result1.frame = CGRectMake(0,30,230,213);
+                         _result2.frame = CGRectMake(180,30,230,213);
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }];
     
 }
 
@@ -117,6 +137,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.navigationController.navigationBar setTintColor:[UIColor colorWithRed:20/255.0f green:20/255.0f blue:20/255.0f alpha:1]];
     self.title = @"HOT OR NOT";
     NSArray* array = [NSArray arrayWithObjects:@"Who's more fun?",@"Who's sexier?",@"Who's more foodie?",@"Who's more honest?", nil];
     int randomIndex = rand()%array.count;
@@ -166,14 +187,6 @@
 }
 
 
-
-
-//restart button
--(void)restartButtonWasPressed:(id)sender {
-    
-    [self viewDidLoad];
-    
-}
 
 #pragma mark -  get pictures and name of user's all friends and show
 
@@ -273,12 +286,17 @@
                      completion:^(BOOL finished){
                          
                      }];
-    
-     
   
 }
 
 #pragma mark - user interaction
+
+//restart button
+-(void)restartButtonWasPressed:(id)sender {
+    
+    [self viewDidLoad];
+    
+}
 - (IBAction)swipe:(id)sender {
     [UIView animateWithDuration:0.2
                           delay:0.0
@@ -337,6 +355,7 @@
         [self endView];
     }
     else{
+        //center to outside of left
         [UIView animateWithDuration:0.2
                               delay:0.0
                             options: UIViewAnimationCurveEaseIn
