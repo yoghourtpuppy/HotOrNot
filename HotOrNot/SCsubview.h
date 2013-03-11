@@ -2,6 +2,7 @@
 //  SCsubview.h
 //  HotOrNot
 //
+//  The subview that display options
 //  Created by Qing Chen on 3/8/13.
 //  Copyright (c) 2013 Qing Chen. All rights reserved.
 //

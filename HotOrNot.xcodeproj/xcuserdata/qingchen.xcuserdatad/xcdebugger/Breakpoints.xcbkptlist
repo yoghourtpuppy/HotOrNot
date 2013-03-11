@@ -13,7 +13,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "244"
          endingLineNumber = "244"
-         landmarkName = "-showFriends"
+         landmarkName = "-requestCompleted:result:error:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -26,8 +26,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "238"
          endingLineNumber = "238"
-         landmarkName = "@implementation SCViewController"
-         landmarkType = "3">
+         landmarkName = "-requestCompleted:result:error:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -39,8 +39,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "248"
          endingLineNumber = "248"
-         landmarkName = "-showFriends"
-         landmarkType = "5">
+         landmarkName = "@implementation SCViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
