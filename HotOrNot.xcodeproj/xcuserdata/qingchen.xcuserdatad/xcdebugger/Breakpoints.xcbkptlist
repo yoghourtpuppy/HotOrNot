@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HotOrNot/SCViewController.m"
-         timestampString = "384577735.143386"
+         timestampString = "384663254.770147"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "187"
-         endingLineNumber = "187"
+         startingLineNumber = "231"
+         endingLineNumber = "231"
          landmarkName = "-showFriends"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,12 +21,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HotOrNot/SCViewController.m"
-         timestampString = "384577735.143386"
+         timestampString = "384663254.770147"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "181"
-         endingLineNumber = "181"
-         landmarkName = "-requestAndGo"
+         startingLineNumber = "225"
+         endingLineNumber = "225"
+         landmarkName = "@implementation SCViewController"
+         landmarkType = "3">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "HotOrNot/SCViewController.m"
+         timestampString = "384663254.770147"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "235"
+         endingLineNumber = "235"
+         landmarkName = "-showFriends"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -34,12 +47,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HotOrNot/SCViewController.m"
-         timestampString = "384577735.143386"
+         timestampString = "384663254.770147"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "167"
-         endingLineNumber = "167"
-         landmarkName = "-requestAndGo"
+         startingLineNumber = "266"
+         endingLineNumber = "266"
+         landmarkName = "-showFriends"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -47,12 +60,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HotOrNot/SCViewController.m"
-         timestampString = "384577726.833416"
+         timestampString = "384663254.770147"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "170"
-         endingLineNumber = "170"
-         landmarkName = "-requestAndGo"
+         startingLineNumber = "174"
+         endingLineNumber = "174"
+         landmarkName = "-restartButtonWasPressed:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -60,12 +73,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HotOrNot/SCViewController.m"
-         timestampString = "384577799.969405"
+         timestampString = "384663254.770147"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "165"
-         endingLineNumber = "165"
-         landmarkName = "-requestAndGo"
+         startingLineNumber = "110"
+         endingLineNumber = "110"
+         landmarkName = "-endView"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

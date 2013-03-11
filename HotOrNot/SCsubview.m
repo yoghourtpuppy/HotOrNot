@@ -11,9 +11,10 @@
 @implementation SCsubview
 @synthesize fButton1=_fButton1;
 @synthesize fButton2=_fButton2;
+@synthesize vsImage = _vsImage;
 @synthesize delegate=_delegate;
-@synthesize flag1 = _flag1;
-@synthesize flag2 = _flag2;
+@synthesize name1 =_name1;
+@synthesize name2 = _name2;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -42,13 +43,17 @@
 - (void)dealloc {
     [_fButton2 release];
     [_fButton1 release];
+    [_vsImage release];
+    [_name1 release];
+    [_name2 release];
     [super dealloc];
 }
 - (IBAction)clickButton1:(id)sender {
-    
+
     if([sender class] == [UIButton class]){
+
         [self.delegate button1Clicked:(UIButton*)sender inView:self];
-        NSLog(@"the button1 is clicked");
+      
     }
 }
 

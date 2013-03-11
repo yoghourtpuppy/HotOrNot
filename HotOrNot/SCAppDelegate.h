@@ -11,6 +11,7 @@
 
 @class SCViewController;
 @class SCLoginViewController;
+@class SCViewController;
 
 @protocol  viewWithButtonDelegate<NSObject>
 

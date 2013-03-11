@@ -14,9 +14,10 @@
 }
 @property (retain, nonatomic) IBOutlet UIButton *fButton1;
 @property (retain, nonatomic) IBOutlet UIButton *fButton2;
+@property (retain, nonatomic) IBOutlet UIImageView *vsImage;
+@property (retain, nonatomic) IBOutlet UILabel *name1;
+@property (retain, nonatomic) IBOutlet UILabel *name2;
 - (IBAction)clickButton1:(id)sender;
 - (IBAction)clickButton2:(id)sender;
 @property(nonatomic,assign)id<viewWithButtonDelegate> delegate;
-@property(assign) int flag1;
-@property(assign) int flag2;
 @end
