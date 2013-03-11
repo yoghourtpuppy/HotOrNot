@@ -158,6 +158,8 @@
     //hide result blocks and show hud
     _result1.hidden = YES;
     _result2.hidden = YES;
+    _result1.text = nil;
+    _result2.text = nil;
     
     self.progressBar.hidden = NO;
     self.progressLable.hidden = NO;
