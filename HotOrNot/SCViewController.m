@@ -11,6 +11,7 @@
 #import "SCAppDelegate.h"
 #import "SCLoginViewController.h"
 #import "SCselectedFriend.h"
+#define SEARCHRANGE 15
 
 @interface SCViewController() <UINavigationControllerDelegate>
 
@@ -26,6 +27,7 @@
 @property (retain, nonatomic) UIImage* img2;
 @property (retain, nonatomic) NSMutableArray *selectedFriends;
 @property (retain,nonatomic) SCsubview* subview;
+@property (nonatomic) NSInteger randNum;
 @end
 
 @implementation SCViewController
@@ -45,6 +47,7 @@
 @synthesize result1 =_result1;
 @synthesize result2 = _result2;
 @synthesize question = _question;
+@synthesize randNum = _randNum;
 
 - (void) dealloc
 {
@@ -81,6 +84,7 @@
     if (self) {
         // Custom initialization
         self.navigationItem.hidesBackButton = YES;
+
     }
     return self;
 }
@@ -141,7 +145,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.navigationController.navigationBar setTintColor:[UIColor colorWithRed:20/255.0f green:20/255.0f blue:20/255.0f alpha:1]];
+    //[self.navigationController.navigationBar setTintColor:[UIColor colorWithRed:20/255.0f green:20/255.0f blue:20/255.0f alpha:1]];
+    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)] ) {
+        UIImage *image = [UIImage imageNamed:@"bar.png"];
+        [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    }
     self.title = @"HOT OR NOT";
     
     //set random questions
@@ -240,6 +248,7 @@
      */
     //array to store selection results
         _selectedFriends = [[NSMutableArray alloc] init];//dealloc
+        _randNum = arc4random() %(_friendCount-1);
         [self showFriends];
     }
 
@@ -248,11 +257,23 @@
 //retrieve callback and show
 - (void)showFriends{
     //select two friends from friends list randomly
+    //if there are more than a certain nunber of friends, select friends in a range of 20 to increase the posibility
+    
     int randNum1 = 0, randNum2 = 0;
-    while(randNum1 == randNum2){
-        randNum1 = arc4random() % (_friendCount-1);
-        randNum2 = arc4random() % (_friendCount-1);
+    if(_friendCount >= SEARCHRANGE)
+    {
+        while(randNum1 == randNum2){
+            randNum1 = (_randNum + arc4random() % SEARCHRANGE) % (_friendCount-1);
+            randNum2 = (_randNum + arc4random() % SEARCHRANGE) % (_friendCount-1);
+        }
     }
+    else{
+        while(randNum1 == randNum2){
+            randNum1 = arc4random() % (_friendCount-1);
+            randNum2 = arc4random() % (_friendCount-1);
+        }
+    }
+   
     
     //get friend name
     _friend1 = [_allFriends objectAtIndex:randNum1];

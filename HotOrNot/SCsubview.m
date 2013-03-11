@@ -60,7 +60,6 @@
 - (IBAction)clickButton2:(id)sender {
     if([sender class] == [UIButton class]){
         [self.delegate button2Clicked:(UIButton*)sender inView:self];
-        NSLog(@"the button2 is clicked");
     }
 }
 @end
