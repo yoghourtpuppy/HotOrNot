@@ -2,6 +2,7 @@
 //  SCViewController.m
 //  HotOrNot
 //
+//  View controller of the main game view
 //  Created by Qing Chen on 3/6/13.
 //  Copyright (c) 2013 Qing Chen. All rights reserved.
 //
@@ -44,6 +45,7 @@
 @synthesize result1 =_result1;
 @synthesize result2 = _result2;
 @synthesize question = _question;
+
 - (void) dealloc
 {
     _allFriends = nil;
@@ -79,10 +81,11 @@
     if (self) {
         // Custom initialization
         self.navigationItem.hidesBackButton = YES;
-
     }
     return self;
 }
+
+//The view showing the result
 - (void)endView{
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
                                               initWithTitle:@"Restart"
@@ -95,12 +98,12 @@
     NSArray *sortDescriptors = @[countDescriptor];
     NSArray *sortedArray = [_selectedFriends sortedArrayUsingDescriptors:sortDescriptors];
     
-    /*for test
+    //for test
     for(int i = 0; i<10;i++){
         SCselectedFriend * sf = [sortedArray objectAtIndex:i];
         NSLog(@"%d: %@ pts: %d",i,sf.name,sf.count);
     }
-     */
+     
     self.progressBar.hidden = YES;
     self.progressLable.hidden = YES;
     
@@ -109,7 +112,8 @@
     
     _result1.hidden = NO;
     _result2.hidden = NO;
-    
+    _result1.text = nil;
+    _result2.text = nil;
     //show the result
     for(int i = 0; i<5;i++){
         SCselectedFriend * sf = [sortedArray objectAtIndex:i];
@@ -139,22 +143,29 @@
     [super viewDidLoad];
     [self.navigationController.navigationBar setTintColor:[UIColor colorWithRed:20/255.0f green:20/255.0f blue:20/255.0f alpha:1]];
     self.title = @"HOT OR NOT";
+    
+    //set random questions
     NSArray* array = [NSArray arrayWithObjects:@"Who's more fun?",@"Who's sexier?",@"Who's more foodie?",@"Who's more honest?", nil];
-    int randomIndex = rand()%array.count;
+    int randomIndex = arc4random()%array.count;
     self.question.text = [array objectAtIndex:randomIndex];
+    
     //add subview to current view
     _subview = [[SCsubview alloc]init];
     _subview.frame = CGRectMake(480,30,480,230);
     [self.view addSubview:_subview];
     _subview.delegate = self;
+    
+    //hide result blocks and show hud
     _result1.hidden = YES;
     _result2.hidden = YES;
+    
+    self.progressBar.hidden = NO;
+    self.progressLable.hidden = NO;
+    self.progressLable.text = @"0/10";
+    self.progressBar.progress = 0.0;
+    
     if (FBSession.activeSession.isOpen) {
-        NSLog(@"start to request and go!");
-        self.progressBar.hidden = NO;
-        self.progressLable.hidden = NO;
-        self.progressLable.text = @"0/10";
-        self.progressBar.progress = 0.0;
+        //start
         [self requestAndGo];
     }else {
         [FBSession openActiveSessionWithReadPermissions:nil
@@ -181,16 +192,13 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
-    if (FBSession.activeSession.isOpen) {
-        
-    } 
+
 }
-
-
 
 #pragma mark -  get pictures and name of user's all friends and show
 
 - (void)requestAndGo {
+    //request
     [FBRequestConnection startWithGraphPath:@"/me/friends?fields=name,picture.height(150).width(150)"
                           completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                               [self requestCompleted:connection result:result error:error];
@@ -198,6 +206,7 @@
                         }];
     
 }
+
 - (void)requestCompleted:(FBRequestConnection *)connection
                   result:(id)result
                    error:(NSError *)error {
@@ -207,7 +216,7 @@
     }
     _allFriends = (NSArray*)[result data];
     _friendCount = [_allFriends count];
-    if(_friendCount<10)
+    if(_friendCount<10)//less than 10 friends alert and exit
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Few Friends"
                                                         message:@"You have so few friends on Facebook dude...Go and get some!"
@@ -236,6 +245,7 @@
 
 }
 
+//retrieve callback and show
 - (void)showFriends{
     //select two friends from friends list randomly
     int randNum1 = 0, randNum2 = 0;
@@ -311,12 +321,12 @@
 }
 
 -(void)button1Clicked:(UIButton *)button inView:(UIView *)view{
-    NSLog(@"the button1 is clicked in main view");
+    //NSLog(@"the button1 is clicked in main view");
     [self buttonClickedResponseWithId:_id1 name:_name1];
     
 }
 -(void)button2Clicked:(UIButton *)button inView:(UIView *)view{
-    NSLog(@"the button2 is clicked in main view");
+    //NSLog(@"the button2 is clicked in main view");
     [self buttonClickedResponseWithId:_id2 name:_name2];
     
 }
@@ -325,6 +335,8 @@
     NSEnumerator *enumerator = [_selectedFriends objectEnumerator];
     SCselectedFriend *cursor;
     BOOL friendExist = NO, end = NO;
+    
+    //calculate result
     if(_selectedFriends.count < 10)
     {
         while(cursor = [enumerator nextObject]){
@@ -355,7 +367,7 @@
         [self endView];
     }
     else{
-        //center to outside of left
+        //view animation center to outside of left
         [UIView animateWithDuration:0.2
                               delay:0.0
                             options: UIViewAnimationCurveEaseIn
@@ -370,6 +382,7 @@
     }
 
 }
+
 // Shared error handler
 -(void)printError:(NSString*)message error:(NSError*)error {
     if(message) {

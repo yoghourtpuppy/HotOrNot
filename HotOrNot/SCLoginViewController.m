@@ -2,6 +2,7 @@
 //  SCLoginViewController.m
 //  HotOrNot
 //
+// This is the view controller of login view
 //  Created by Qing Chen on 3/6/13.
 //  Copyright (c) 2013 Qing Chen. All rights reserved.
 //

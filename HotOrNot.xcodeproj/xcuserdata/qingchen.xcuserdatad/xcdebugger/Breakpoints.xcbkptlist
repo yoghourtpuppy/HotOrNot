@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HotOrNot/SCViewController.m"
-         timestampString = "384664843.424852"
+         timestampString = "384666443.413868"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "244"
-         endingLineNumber = "244"
+         startingLineNumber = "254"
+         endingLineNumber = "254"
          landmarkName = "-showFriends"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HotOrNot/SCViewController.m"
-         timestampString = "384664843.424852"
+         timestampString = "384666443.413868"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "238"
-         endingLineNumber = "238"
+         startingLineNumber = "247"
+         endingLineNumber = "247"
          landmarkName = "@implementation SCViewController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HotOrNot/SCViewController.m"
-         timestampString = "384664843.424852"
+         timestampString = "384666443.413868"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "248"
-         endingLineNumber = "248"
+         startingLineNumber = "258"
+         endingLineNumber = "258"
          landmarkName = "-showFriends"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HotOrNot/SCViewController.m"
-         timestampString = "384664843.424852"
+         timestampString = "384666443.413868"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "279"
-         endingLineNumber = "279"
+         startingLineNumber = "289"
+         endingLineNumber = "289"
          landmarkName = "-showFriends"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "HotOrNot/SCViewController.m"
-         timestampString = "384664843.424852"
+         timestampString = "384666443.413868"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "117"
-         endingLineNumber = "117"
+         startingLineNumber = "121"
+         endingLineNumber = "121"
          landmarkName = "-endView"
          landmarkType = "5">
       </FileBreakpoint>
