@@ -122,8 +122,8 @@
     for(int i = 0; i<5;i++){
         SCselectedFriend * sf = [sortedArray objectAtIndex:i];
         SCselectedFriend * sf1 = [sortedArray objectAtIndex:(i+5)];
-        _result1.text =[ _result1.text stringByAppendingString:[NSString stringWithFormat:@"%d.  %@   pts: %d\n\n",i,sf.name,sf.count]];
-        _result2.text = [ _result2.text stringByAppendingString:[NSString stringWithFormat:@"%d.  %@   pts: %d\n\n",i+5,sf1.name,sf1.count]];
+        _result1.text =[ _result1.text stringByAppendingString:[NSString stringWithFormat:@"%d.  %@   pts: %d\n",i,sf.name,sf.count]];
+        _result2.text = [ _result2.text stringByAppendingString:[NSString stringWithFormat:@"%d.  %@   pts: %d\n",i+5,sf1.name,sf1.count]];
     }
     //view animation: right to the center of screen
     _result1.frame = CGRectMake(-480,30,230,213);
